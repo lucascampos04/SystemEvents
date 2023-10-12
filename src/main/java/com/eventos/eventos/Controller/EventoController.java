@@ -23,7 +23,7 @@ public class EventoController {
     }
 
     @RequestMapping(value = "/cadastrarEvento", method = RequestMethod.POST)
-    public String form(Evento eventoModel){
+    public String formPost(Evento eventoModel){
         er.save(eventoModel);
         return "redirect:cadastrarEvento";
     }
@@ -33,8 +33,8 @@ public class EventoController {
         ModelAndView mv = new ModelAndView("index");
 
         // Buscando eventos
-        Iterable<Evento> eventos = er.findAll();
-        mv.addObject("eventos", eventos);
+        Iterable<Evento> evento = er.findAll();
+        mv.addObject("eventos", evento);
         return mv;
     }
 
@@ -48,13 +48,10 @@ public class EventoController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public String detalhesEvento(@PathVariable("id") long id, Convidado convidado){
+    public String detalhesEventoPost(@PathVariable("id") long id, Convidado convidado){
         Evento evento = er.findById(id);
         convidado.setEvento(evento);
         cr.save(convidado);
         return "redirect:/{id}";
     }
-
-
-
 }

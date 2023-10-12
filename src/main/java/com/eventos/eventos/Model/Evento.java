@@ -12,8 +12,8 @@ public class Evento implements Serializable {
 
     private static final long serialVersionUIDLONG = 1L;
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nome;
     private String local;
