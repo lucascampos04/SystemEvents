@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<<html lang="pt-br" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pagina principal</title>
 </head>
 <body>
-    <h1>Hello word</h1>
+    <h1>Lista de Eventos</h1>
+    <h3><a href="/cadastrarEvento">Link para cadastrar um evento</a></h3>
+
+    <div th:each="evento : ${eventos}">
+        <div class="row">
+            <p><span th:text="${evento.nome}"></span></p>
+            <p><span th:text="${evento.local}"></span></p>
+            <p><span th:text="${evento.data}"></span></p>
+            <p><span th:text="${evento.horario}"></span></p>
+        </div>
+    </div>
+
+
 </body>
 </html>

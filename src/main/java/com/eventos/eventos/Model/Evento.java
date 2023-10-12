@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @Data
 @Entity
-public class EventoModel implements Serializable {
+public class Evento implements Serializable {
 
     private static final long serialVersionUIDLONG = 1L;
 
