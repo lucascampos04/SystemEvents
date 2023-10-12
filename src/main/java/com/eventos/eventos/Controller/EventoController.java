@@ -4,9 +4,7 @@ import com.eventos.eventos.Model.Evento;
 import com.eventos.eventos.Repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -33,6 +31,15 @@ public class EventoController {
         // Buscando eventos
         Iterable<Evento> eventos = er.findAll();
         mv.addObject("eventos", eventos);
+        return mv;
+    }
+
+    @RequestMapping("/{id}")
+    public ModelAndView detalhesEvento(@PathVariable("id") long id){
+        Evento evento = er.findById(id);
+        ModelAndView mv = new ModelAndView("Evento/detalhesEvento");
+        mv.addObject("evento", evento);
+        System.out.println("Evento : " + id);
         return mv;
     }
 
