@@ -25,7 +25,7 @@ public class Evento implements Serializable {
     private String data;
     @NotBlank
     private String horario;
-    @OneToMany
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Convidado> convidados;
 
 }

@@ -48,6 +48,23 @@ public class EventoController {
         return mv;
     }
 
+    @RequestMapping("/deletarEvento")
+    public String deletarEvento(long id){
+        Evento evento = er.findById(id);
+        er.delete(evento);
+        return "redirect:/eventos";
+    }
+
+    @RequestMapping("/deletarConvidado")
+    public String deletarConvidado(String rg){
+        Convidado convidado = cr.findByRg(rg);
+        Evento evento = convidado.getEvento();
+        long idLong = evento.getId();
+        String codigo = "" + idLong;
+        cr.delete(convidado);
+        return  "redirect:/" + codigo;
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView detalhesEvento(@PathVariable("id") long id){
         Evento evento = er.findById(id);
@@ -61,6 +78,7 @@ public class EventoController {
 
         return mv;
     }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public String detalhesEventoPost(@PathVariable("id") long id,

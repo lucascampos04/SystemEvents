@@ -2,7 +2,6 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Pagina principal</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,7 +9,7 @@
 <body>
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo" style="margin-left: 30px; font-size: 50px; font-weight: 900">Eventos</a>
+        <a href="/eventos" class="brand-logo" style="margin-left: 30px; font-size: 50px; font-weight: 900">Eventos</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Cadastrar um evento</a></li>
         </ul>
@@ -18,15 +17,25 @@
 </nav>
 
 <div class="container">
-    <h3>Lista de Eventos</h3>
-    <div th:each="evento : ${evento}" class="card">
-        <div class="card-content">
-            <span class="card-title" th:text="${evento.nome}"></span>
-            <p><strong>Local:</strong> <span th:text="${evento.local}"></span></p>
-            <p><strong>Data:</strong> <span th:text="${evento.data}"></span></p>
-            <p><strong>Horario:</strong> <span th:text="${evento.horario}"></span></p>
-        </div>
-    </div>
+    <h3>Detalhes do Evento</h3>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Local</th>
+            <th>Data</th>
+            <th>Horario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="evento : ${evento}">
+            <td><span th:text="${evento.nome}"></span></td>
+            <td><span th:text="${evento.local}"></span></td>
+            <td><span th:text="${evento.data}"></span></td>
+            <td><span th:text="${evento.horario}"></span></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div th:include="msgValidacao :: msg"></div>
 
@@ -50,12 +59,26 @@
 
 <div class="container" style="display: none" id="part">
     <h5>Lista de Convidados</h5>
-    <div th:each="convidado : ${convidados}" class="card">
-        <div class="card-content">
-            <p><strong>Nome:</strong> <span th:text="${convidado.nomeConvidado}"></span></p>
-            <p><strong>RG:</strong> <span th:text="${convidado.rg}"></span></p>
-        </div>
-    </div>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>RG</th>
+            <th>Deletar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="convidado : ${convidados}">
+            <td><span th:text="${convidado.nomeConvidado}"></span></td>
+            <td><span th:text="${convidado.rg}"></span></td>
+            <td>
+                <a class="waves-effect waves-light btn-small" th:href="${(#mvc.url('EC#deletarConvidado').arg(0, convidado.rg)).build()}">
+                    <span><i class="material-icons left">delete</i></span>
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
@@ -63,13 +86,13 @@
     const btn = document.getElementById('btn');
     const part = document.getElementById('part');
 
-    let isPartVisible = false;
+    let isPartVisible = true;
 
     btn.addEventListener('click', () => {
-        if (isPartVisible){
+        if (isPartVisible) {
             part.style.display = 'none';
             isPartVisible = false;
-        } else{
+        } else {
             part.style.display = 'block';
             isPartVisible = true;
         }
