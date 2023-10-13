@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pagina principal</title>
@@ -8,31 +8,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-    <h1 style="text-align: center">Lista de Eventos</h1>
-    <h3 style="text-align: center"><a href="/cadastrarEvento" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>cadastrar um evento</a></h3>
-    <div class="container">
-        <table>
-            <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Local</th>
-                <th>Data</th>
-                <th>Horario</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="evento : ${eventos}">
-                <td><a th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.id)).build()}"><span th:text="${evento.nome}"></span></a></td>
-                <td><span th:text="${evento.local}"></span></td>
-                <td><span th:text="${evento.data}"></span></td>
-                <td><span th:text="${evento.horario}"></span></td>
-            </tr>
-            </tbody>
-        </table>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Lista de Eventos</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/cadastrarEvento" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Cadastrar um evento</a></li>
+        </ul>
     </div>
+</nav>
 
+<div class="container">
+    <h3>Lista de Eventos</h3>
+    <table class="striped">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Local</th>
+            <th>Data</th>
+            <th>Horario</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="evento : ${eventos}">
+            <td>
+                <a th:href="${(#mvc.url('EC#detalhesEvento').arg(0, evento.id)).build()}">
+                    <span th:text="${evento.nome}"></span>
+                </a>
+            </td>
+            <td><span th:text="${evento.local}"></span></td>
+            <td><span th:text="${evento.data}"></span></td>
+            <td><span th:text="${evento.horario}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-
-    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 </body>
 </html>

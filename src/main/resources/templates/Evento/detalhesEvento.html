@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Pagina principal</title>
@@ -8,27 +8,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-    <h1>Eventos</h1>
-    <h3 style="text-align: center"><a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>cadastrar um evento</a></h3>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo" style="margin-left: 30px; font-size: 50px; font-weight: 900">Eventos</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="/eventos" class="waves-effect waves-light btn"><i class="material-icons left">add_circle_outline</i>Cadastrar um evento</a></li>
+        </ul>
+    </div>
+</nav>
 
-    <div th:each="evento : ${evento}">
-        <div class="container">
-            <div class="row">
-                <p>Nome : <span th:text="${evento.nome}"></span></p>
-                <p>Local : <span th:text="${evento.local}"></span></p>
-                <p>Data : <span th:text="${evento.data}"></span></p>
-                <p>Horario : <span th:text="${evento.horario}"></span></p>
-            </div>
-
-
-            <form method="post">
-                Nome : <input type="text" value="" name="nomeConvidado"/>
-                Rg : <input type="text" value="" name="rg"/>
-                <button type="submit" class="waves-effect waves-light btn">Adicionar convidado</button>
-            </form>
+<div class="container">
+    <h3>Lista de Eventos</h3>
+    <div th:each="evento : ${evento}" class="card">
+        <div class="card-content">
+            <span class="card-title" th:text="${evento.nome}"></span>
+            <p><strong>Local:</strong> <span th:text="${evento.local}"></span></p>
+            <p><strong>Data:</strong> <span th:text="${evento.data}"></span></p>
+            <p><strong>Horario:</strong> <span th:text="${evento.horario}"></span></p>
         </div>
     </div>
 
-    <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+    <div th:include="msgValidacao :: msg"></div>
+
+    <form method="post" th:object="${convidado}" class="card">
+        <div class="card-content">
+            <div class="input-field">
+                <input type="text" value="" name="nomeConvidado" id="nomeConvidado">
+                <label for="nomeConvidado">Nome do Convidado</label>
+            </div>
+            <div class="input-field">
+                <input type="text" value="" name="rg" id="rg">
+                <label for="rg">RG do Convidado</label>
+            </div>
+        </div>
+        <div class="card-action">
+            <button type="submit" class="btn waves-effect waves-light">Adicionar Convidado</button>
+        </div>
+    </form>
+    <button id="btn" class="waves-effect waves-light btn"><i class="material-icons left">account_box</i>Participantes</button>
+</div>
+
+<div class="container" style="display: none" id="part">
+    <h5>Lista de Convidados</h5>
+    <div th:each="convidado : ${convidados}" class="card">
+        <div class="card-content">
+            <p><strong>Nome:</strong> <span th:text="${convidado.nomeConvidado}"></span></p>
+            <p><strong>RG:</strong> <span th:text="${convidado.rg}"></span></p>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+<script>
+    const btn = document.getElementById('btn');
+    const part = document.getElementById('part');
+
+    let isPartVisible = false;
+
+    btn.addEventListener('click', () => {
+        if (isPartVisible){
+            part.style.display = 'none';
+            isPartVisible = false;
+        } else{
+            part.style.display = 'block';
+            isPartVisible = true;
+        }
+    });
+</script>
 </body>
 </html>
